@@ -5,14 +5,14 @@
 - Tên nhóm: HustNeu
 - Lớp: L3A
 - Repo nhóm: `K5-L3A-DAY08-HustNeu-FromWorkflowsToAgents` (xem [SUBMISSION.md](SUBMISSION.md))
-- URL repo, nhánh nộp, commit chốt: https://github.com/lytrann236/K5-L3A-DAY08-HustNeu-FromWorkflowsToAgents, `main`, (điền ở CP5)
+- URL repo, nhánh nộp, commit chốt: https://github.com/lytrann236/K5-L3A-DAY08-HustNeu-FromWorkflowsToAgents, `main`, b74ef96
 
 ## Thành viên
 
 | STT | Họ tên | MSSV | Email | GitHub | Vai trò |
 | --: | ------ | ---- | ----- | ------ | ------- |
 |   1 | Trần Thị Lý | 2A202603404 |26ai.lytt@vinuni.edu.vn | lytrann236 | Workflow + integration |
-|   2 | Trần Việt Tiến | 2A202603394 | | chuvoicon-cpu | Single agent và kiểm thử single |
+|   2 | Trần Việt Tiến | 2A202603394 |26ai.tientv@vinuni.edu.vn | chuvoicon-cpu | Single agent và kiểm thử single |
 |   3 | Đỗ Hoàng Minh | 2A202603507 | 26ai.hoangd@vinuni.edu.vn | Mazzonthego | Orchestrator + handoff |
 |   4 | Nguyễn Thùy Dương | 2A202603388 | 26ai.duongnt8@vinuni.edu.vn | NTD-DUONG | Ledger/crash + evaluation/report |
 

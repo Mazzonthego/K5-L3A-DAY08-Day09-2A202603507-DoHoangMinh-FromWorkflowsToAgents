@@ -4,7 +4,7 @@
 
 - Tên nhóm: HustNeu — L3A.
 - Repo: https://github.com/lytrann236/K5-L3A-DAY08-HustNeu-FromWorkflowsToAgents.
-- Commit code dùng để đánh giá: `7f74a30`, thống nhất với ADR hiện tại. Đây là commit tích hợp dùng để đo, chưa phải commit chốt toàn bộ hồ sơ.
+- Commit chốt: `b74ef96`.
 
 | Thành viên | MSSV | Phần việc |
 | --- | --- | --- |

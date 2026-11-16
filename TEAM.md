@@ -11,18 +11,11 @@
 
 | STT | Họ tên | MSSV | Email | GitHub | Vai trò |
 | --: | ------ | ---- | ----- | ------ | ------- |
-<<<<<<< Updated upstream
+
 |   1 | Trần Thị Lý | 2A202603404 | | lytrann236 | Workflow + integration |
 |   2 | Trần Việt Tiến | 2A202603394 | | https://github.com/lytrann236 | Single agent và kiểm thử single |
-|   3 | <Họ tên> | <MSSV> | | <github> | Orchestrator + handoff |
-|   4 | <Họ tên> | <MSSV> | | <github> | Ledger/crash + evaluation/report |
-=======
-|   1 |        |      |       |        |         |
-|   2 |        |      |       |        |         |
 |   3 | Đỗ Hoàng Minh | 2A202603507|26ai.hoangd@vinuni.edu.vn|Mazzonthego |         |
-|   4 |        |      |       |        |         |
-
->>>>>>> Stashed changes
+|   4 | Nguyễn Thùy Dương | 2A202603388 | | | Ledger/crash + evaluation/report |
 
 Gợi ý chia vai:
 
@@ -38,7 +31,7 @@ Gợi ý chia vai:
 | Trần Thị Lý | Workflow + integration | 02bd691 | `src/tests/test_workflow_extra.py` |
 | Trần Việt Tiến | Single agent | `87dd8b8` | `src/tests/test_single_extra.py::test_single_uses_order_delay_despite_ticket_injection` |
 | <Họ tên> | Orchestrator + handoff | <commit> | <file test> |
-| <Họ tên> | Ledger/crash + evaluation/report | <commit> | <file test> |
+| Nguyễn Thùy Dương | Ledger/crash + evaluation/report | e59a0a6 | `src/tests/test_policy_extra.py` |
 
 ## Cá nhân
 
@@ -105,16 +98,17 @@ Sao chép mục dưới đây cho từng thành viên.
 
 -
 
-## <MSSV_HoTen người 4>
+## 2A202603388_NguyenThuyDuong
 
 ### Phần việc phụ trách
 
--
+- Ledger/crash, kiểm thử policy và evaluation/report.
 
 ### Đóng góp cụ thể
 
--
+- Bổ sung ba test retry/approval/order cap và khôi phục sau crash qua kết nối mới; chạy đánh giá sau tích hợp và chuẩn bị báo cáo.
 
 ### Bằng chứng
 
--
+- Commit `e59a0a6`; test bổ sung 3 passed; sau tích hợp: host 66 passed, student 248 passed, crash 20/20.
+- Báo cáo: [2A202603388_NguyenThuyDuong.md](report/team/2A202603388_NguyenThuyDuong.md).

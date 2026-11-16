@@ -15,7 +15,7 @@
 |   1 | Trần Thị Lý | 2A202603404 | | lytrann236 | Workflow + integration |
 |   2 | Trần Việt Tiến | 2A202603394 | | https://github.com/lytrann236 | Single agent và kiểm thử single |
 |   3 | Đỗ Hoàng Minh | 2A202603507|26ai.hoangd@vinuni.edu.vn|Mazzonthego |         |
-|   4 | Nguyễn Thùy Dương | 2A202603388 | | | Ledger/crash + evaluation/report |
+|   4 | Nguyễn Thùy Dương | 2A202603388 | 26ai.duongnt8@vinuni.edu.vn | NTD-DUONG | Ledger/crash + evaluation/report |
 
 Gợi ý chia vai:
 
@@ -31,7 +31,7 @@ Gợi ý chia vai:
 | Trần Thị Lý | Workflow + integration | 02bd691 | `src/tests/test_workflow_extra.py` |
 | Trần Việt Tiến | Single agent | `87dd8b8` | `src/tests/test_single_extra.py::test_single_uses_order_delay_despite_ticket_injection` |
 | <Họ tên> | Orchestrator + handoff | <commit> | <file test> |
-| Nguyễn Thùy Dương | Ledger/crash + evaluation/report | e59a0a6 | `src/tests/test_policy_extra.py` |
+| Nguyễn Thùy Dương | Ledger/crash + evaluation/report | `e59a0a6` (test), `956a585` (research/ablation) | `src/tests/test_policy_extra.py` |
 
 ## Cá nhân
 
@@ -106,9 +106,13 @@ Sao chép mục dưới đây cho từng thành viên.
 
 ### Đóng góp cụ thể
 
-- Bổ sung ba test retry/approval/order cap và khôi phục sau crash qua kết nối mới; chạy đánh giá sau tích hợp và chuẩn bị báo cáo.
+- Bổ sung ba test retry/approval/order cap và khôi phục sau crash qua kết nối mới; chạy đánh giá sau tích hợp và tổng hợp báo cáo nhóm, ADR, báo cáo cá nhân.
+- Hoàn thiện research card R2 theo MAST, thêm biến thể thí nghiệm chỉ tắt ticket-delay override của swarm và chạy benchmark đối chứng; không sửa host hoặc swarm tham chiếu.
+- Rà 280 trace JSON với 54 giá trị nhạy cảm của fixture public; không phát hiện chuỗi nhạy cảm trong phạm vi kiểm tra.
 
 ### Bằng chứng
 
 - Commit `e59a0a6`; test bổ sung 3 passed; sau tích hợp: host 66 passed, student 248 passed, crash 20/20.
+- Commit research `956a585`; `src/reports/research_ablation.json`: swarm 69/70, biến thể 70/70; đây là kiểm chứng lỗi đã biết, không phải kết quả hidden.
+- Rà soát tại commit `0be318c`: toàn bộ 314 test pass; `check_submission` đạt 0 FAIL, 0 WARN. Checker không thay thế rà soát hồ sơ thủ công hoặc chấm hidden.
 - Báo cáo: [2A202603388_NguyenThuyDuong.md](report/team/2A202603388_NguyenThuyDuong.md).

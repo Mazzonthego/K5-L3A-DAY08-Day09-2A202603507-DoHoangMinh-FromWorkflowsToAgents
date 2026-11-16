@@ -14,7 +14,7 @@
 
 |   1 | Trần Thị Lý | 2A202603404 | | lytrann236 | Workflow + integration |
 |   2 | Trần Việt Tiến | 2A202603394 | | https://github.com/lytrann236 | Single agent và kiểm thử single |
-|   3 | Đỗ Hoàng Minh | 2A202603507|26ai.hoangd@vinuni.edu.vn|Mazzonthego |         |
+|   3 | Đỗ Hoàng Minh | 2A202603507 | 26ai.hoangd@vinuni.edu.vn | Mazzonthego | Orchestrator + handoff |
 |   4 | Nguyễn Thùy Dương | 2A202603388 | | | Ledger/crash + evaluation/report |
 
 Gợi ý chia vai:
@@ -30,7 +30,7 @@ Gợi ý chia vai:
 | --- | --- | --- | --- |
 | Trần Thị Lý | Workflow + integration | 02bd691 | `src/tests/test_workflow_extra.py` |
 | Trần Việt Tiến | Single agent | `87dd8b8` | `src/tests/test_single_extra.py::test_single_uses_order_delay_despite_ticket_injection` |
-| <Họ tên> | Orchestrator + handoff | <commit> | <file test> |
+| Đỗ Hoàng Minh | Orchestrator + handoff | `4de8972`, `9e77971` | `src/tests/test_orchestrator_extra.py` |
 | Nguyễn Thùy Dương | Ledger/crash + evaluation/report | e59a0a6 | `src/tests/test_policy_extra.py` |
 
 ## Cá nhân
@@ -84,19 +84,26 @@ Sao chép mục dưới đây cho từng thành viên.
 - Kết quả kiểm tra: 62 test single pass, 1 test cá nhân pass, 55 test host pass (đã gồm test cá nhân).
 - Báo cáo: [2A202603394_Trần Việt Tiến.md](<report/team/2A202603394_Trần Việt Tiến.md>).
 
-## <MSSV_HoTen người 3>
+## 2A202603507_DoHoangMinh
 
 ### Phần việc phụ trách
 
--
+- Shape C `orchestrator` (`src/lab8/shapes/orchestrator.py`), test riêng `src/tests/test_orchestrator_extra.py`, CP4 + CP5.
 
 ### Đóng góp cụ thể
 
--
+- Dựng handoff bằng `make_handoff` với `facts={}` và ba tool đọc `lookup_order`, `lookup_policy`, `compute_compensation`; không đưa secret, header hay claim row qua ranh giới.
+- Chạy investigator bằng `run_readonly_investigators`, lấy quote từ order chứ không từ ticket; truyền quote đầy đủ vào `issue_refund` để host tự trừ phần đã hoàn và kiểm trần (T13/T14).
+- Không tự deny khi quote > 0: vẫn gọi `issue_refund` để host ghi audit `policy_denied`. Truyền `crash_at`, chỉ bắt `InjectedCrash` để ghi trace rồi `raise` (T12).
+- Trace chỉ ghi handoff đã sanitize và field allowlist, mọi nhánh return đều có trace.
+- Thêm 5 test: trace sạch, handoff chỉ tool đọc, C-002 `denied`, C-013 có audit `policy_denied`, C-014 chỉ hoàn 120.000.
 
 ### Bằng chứng
 
--
+- Commit `4de8972` (code), `9e77971` (test + `benchmark.json`, `crash.json`); merge `94b0247`.
+- `python -m pytest -q -m student -o addopts= -k orchestrator` → 62 passed; `tests/test_orchestrator_extra.py` → 5 passed; toàn bộ → 311 passed; crash `20/20`.
+- Benchmark: pass 1.000, pass^5 1.000, cost/success 47.30.
+- Báo cáo: [2A202603507_DoHoangMinh.md](report/team/2A202603507_DoHoangMinh.md).
 
 ## 2A202603388_NguyenThuyDuong
 

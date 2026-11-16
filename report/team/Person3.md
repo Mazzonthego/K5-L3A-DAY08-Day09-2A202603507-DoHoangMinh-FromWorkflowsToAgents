@@ -87,6 +87,19 @@
   - `python -m pytest -q -o addopts=` (toàn bộ 306 test) → **`306 passed`**.
   - Chạy tay `C-001`: `status = resolved`, `proposal_amount = 35000`, `refund_effects` có 1 dòng 35000, trace `R-orchestrator-C-001-s11.json`.
 
+### 2026-11-16 — Git: nhánh `feat/orchestrator` và merge vào `main`
+
+- Tạo/reset nhánh `feat/orchestrator` tại commit hiện tại (nhánh cũ là ancestor của `main`, không có commit riêng nên an toàn).
+- Commit code + báo cáo:
+  - `4de8972` — `feat(orchestrator): implement read-only handoff and host-issued refund`
+- Đồng bộ `main` với remote:
+  - `git pull --ff-only origin main` → fast-forward `3620ad5..948b7dc`.
+  - `git merge --no-ff feat/orchestrator` → merge commit `c3cb9b9`.
+- Kiểm tra lại trên `main`: `python -m pytest -q -o addopts=` → **`306 passed`**.
+- Đã push:
+  - `feat/orchestrator` → remote.
+  - `main` → `948b7dc..c3cb9b9`.
+
 ---
 
 ## Bước 0 — Mở terminal đúng thư mục và kích hoạt venv
@@ -601,7 +614,7 @@ Cập nhật phần Bằng chứng bằng kết quả thật:
 
 - [x] `python -m lab8.smoke` → `lab8.smoke pass`
 - [x] Baseline: `62 failed, 244 passed` (62 fail là orchestrator)
-- [x] Tạo nhánh `feature/person3-orchestrator`
+- [x] Tạo nhánh `feat/orchestrator` và push
 - [x] Commit bản runbook `report/team/Person3.md`
 - [x] Viết `src/lab8/shapes/orchestrator.py`
 - [ ] Chạy thử `C-001`, `C-013`, `C-014`
@@ -610,4 +623,4 @@ Cập nhật phần Bằng chứng bằng kết quả thật:
 - [x] `python -m pytest -q -m student -o addopts= -k orchestrator` → `62 passed`
 - [x] `python -m pytest -q` → không có `failed`
 - [ ] Crash suite / benchmark / `check_submission` nếu làm CP4–CP5
-- [ ] Commit, push nhánh, cập nhật báo cáo và `TEAM.md`
+- [x] Commit, push nhánh, merge `main`, cập nhật báo cáo và `TEAM.md`

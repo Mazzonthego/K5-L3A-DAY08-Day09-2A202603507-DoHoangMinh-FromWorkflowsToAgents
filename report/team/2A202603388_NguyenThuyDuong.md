@@ -4,8 +4,8 @@
 
 - Họ tên: Nguyễn Thùy Dương
 - MSSV: 2A202603388
-- Email: Chưa bổ sung.
-- GitHub: Chưa bổ sung tài khoản cá nhân.
+- Email: 26ai.duongnt8@vinuni.edu.vn
+- GitHub: NTD-DUONG
 - Nhóm: HustNeu — L3A.
 
 ## 2. Phần việc phụ trách

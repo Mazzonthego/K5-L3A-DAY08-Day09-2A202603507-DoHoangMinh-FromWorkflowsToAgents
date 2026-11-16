@@ -11,10 +11,18 @@
 
 | STT | Họ tên | MSSV | Email | GitHub | Vai trò |
 | --: | ------ | ---- | ----- | ------ | ------- |
+<<<<<<< Updated upstream
 |   1 | Trần Thị Lý | 2A202603404 | | lytrann236 | Workflow + integration |
 |   2 | Trần Việt Tiến | 2A202603394 | | https://github.com/lytrann236 | Single agent và kiểm thử single |
 |   3 | <Họ tên> | <MSSV> | | <github> | Orchestrator + handoff |
 |   4 | <Họ tên> | <MSSV> | | <github> | Ledger/crash + evaluation/report |
+=======
+|   1 |        |      |       |        |         |
+|   2 |        |      |       |        |         |
+|   3 | Đỗ Hoàng Minh | 2A202603507|26ai.hoangd@vinuni.edu.vn|Mazzonthego |         |
+|   4 |        |      |       |        |         |
+
+>>>>>>> Stashed changes
 
 Gợi ý chia vai:
 

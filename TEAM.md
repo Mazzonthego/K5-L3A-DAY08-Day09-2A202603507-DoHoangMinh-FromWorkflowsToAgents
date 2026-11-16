@@ -64,7 +64,7 @@ Sao chép mục dưới đây cho từng thành viên.
 - Commit `02bd691`, PR #1 (merge `d665216`).
 - `python -m pytest -q -m student -o addopts= -k workflow` → 62 passed.
 - `python -m pytest -q tests/test_workflow_extra.py` → 3 passed.
-
+- Báo cáo: [2A202603404_TranThiLy.md](<report/team/2A202603404_TranThiLy.md>).
 ## 2A202603394_TranVietTien
 
 ### Phần việc phụ trách
@@ -82,7 +82,7 @@ Sao chép mục dưới đây cho từng thành viên.
 
 - Commit code và test: `87dd8b8`; báo cáo cá nhân: `c8be9f3`.
 - Kết quả kiểm tra: 62 test single pass, 1 test cá nhân pass, 55 test host pass (đã gồm test cá nhân).
-- Báo cáo: [2A202603394_Trần Việt Tiến.md](<report/team/2A202603394_Trần Việt Tiến.md>).
+- Báo cáo: [2A202603394_TranVietTien.md](<report/team/2A202603394_TranVietTien.md>).
 
 ## <MSSV_HoTen người 3>
 

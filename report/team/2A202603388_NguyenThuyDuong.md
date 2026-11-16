@@ -10,7 +10,7 @@
 
 ## 2. Phần việc phụ trách
 
-Phụ trách phần người 4: tìm hiểu ledger, approval và crash recovery; bổ sung test policy; chạy đánh giá sau khi tích hợp ba shape; tổng hợp bằng chứng cho báo cáo nhóm và quyết định kiến trúc. Không sửa các file thước đo `durability.py`, `policy.py`, config hoặc dữ liệu public.
+Phụ trách phần 4: tìm hiểu ledger, approval và crash recovery; bổ sung test policy; chạy đánh giá sau khi tích hợp ba shape; tổng hợp bằng chứng cho báo cáo nhóm và quyết định kiến trúc. Không sửa các file thước đo `durability.py`, `policy.py`, config hoặc dữ liệu public.
 
 ## 3. Đóng góp cụ thể
 

@@ -87,7 +87,7 @@ Sao chép mục dưới đây cho từng thành viên.
 
 ### Phần việc phụ trách
 
-- Shape C `orchestrator` (`src/lab8/shapes/orchestrator.py`), test riêng `src/tests/test_orchestrator_extra.py`, CP4 + CP5.
+- Shape C `orchestrator` (`src/lab8/shapes/orchestrator.py`), test riêng `src/tests/test_orchestrator_extra.py`
 
 ### Đóng góp cụ thể
 
@@ -102,7 +102,6 @@ Sao chép mục dưới đây cho từng thành viên.
 - Commit `4de8972` (code), `9e77971` (test + `benchmark.json`, `crash.json`); merge `94b0247`.
 - `python -m pytest -q -m student -o addopts= -k orchestrator` → 62 passed; `tests/test_orchestrator_extra.py` → 5 passed; toàn bộ → 311 passed; crash `20/20`.
 - Benchmark: pass 1.000, pass^5 1.000, cost/success 47.30.
-- Báo cáo: [2A202603507_DoHoangMinh.md](report/team/2A202603507_DoHoangMinh.md).
 
 ## 2A202603388_NguyenThuyDuong
 

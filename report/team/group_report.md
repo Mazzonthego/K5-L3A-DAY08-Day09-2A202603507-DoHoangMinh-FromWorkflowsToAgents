@@ -104,7 +104,7 @@ Chi tiết nằm trong `TEAM.md` và báo cáo cá nhân. Nhóm sử dụng AI �
 
 Public chỉ có 14 claim và năm seed; chưa có hidden grade để kết luận đạt ngưỡng hidden 0,75 hoặc báo số đếm leak/bypass chính thức. MockLLM không đại diện cho độ tin cậy, chi phí hay latency của model sản xuất. Chênh lệch steps còn phụ thuộc cách ghi event trace.
 
-So sánh hiện tại thay đổi cả kiến trúc lẫn cách gọi model, chưa cô lập tác động nhân quả của topology. Research card và ablation một biến cần hoàn thiện; chưa tuyên bố đã có kết quả thí nghiệm này. Trước khi nộp cần rà trace riêng, bổ sung bằng chứng còn thiếu và chạy lại `check_submission` đến `0 FAIL`. Nếu thay code sau lần đo, cần đánh giá lại và cập nhật commit/run id tương ứng.
+So sánh bốn shape thay đổi cả kiến trúc lẫn cách gọi model, chưa cô lập tác động nhân quả của topology. Thí nghiệm riêng trong [research_card.md](research_card.md) chỉ tắt ticket-delay override của swarm, giữ nguyên các điều kiện còn lại: pass tăng từ 69/70 lên 70/70, pass^5 từ 13/14 lên 14/14, variance về 0 và cost/success từ 49,57 xuống 48,72 VND mô phỏng. Nguồn: `src/reports/research_ablation.json`. Đây là kiểm chứng cơ chế lỗi đã biết, không phải phát hiện độc lập hay tái lập toàn bộ MAST. Kiểm tra submission sau khi điền research card đạt `0 FAIL`; vẫn cần rà trace riêng và kiểm tra hồ sơ cuối trước khi nộp. Nếu thay code sau lần đo, cần đánh giá lại và cập nhật commit/run id tương ứng.
 
 ## 8. Tài liệu tham khảo
 

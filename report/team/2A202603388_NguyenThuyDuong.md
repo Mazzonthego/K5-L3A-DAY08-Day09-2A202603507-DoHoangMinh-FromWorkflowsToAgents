@@ -50,6 +50,6 @@ Tôi tự chạy smoke và test trên PowerShell, xác nhận smoke pass, 11 tes
 
 ## 6. Tự đánh giá
 
-Phần test bổ sung và đánh giá public đã có bằng chứng chạy thực tế. Nội dung cần nắm để trình bày là ranh giới model/code, transaction của ledger và khác biệt giữa quote với số tiền thực trả sau khi áp trần theo đơn.
+Qua phần việc được giao, em hiểu rõ hơn vì sao cần dùng ledger để tránh hoàn tiền trùng khi chạy lại hoặc gặp sự cố. Em cũng phân biệt được quote ban đầu với số tiền thực tế được hoàn, đồng thời hiểu rằng việc tính tiền và kiểm tra approval phải do code xử lý. Các test bổ sung đều chạy thành công, giúp em có cơ sở kiểm tra phần mình phụ trách.
 
-Các việc của nhóm chưa hoàn tất tại thời điểm viết: research card và ablation một biến, rà trace riêng, kiểm tra submission cuối cùng và hidden nếu được cung cấp. Chưa có kết quả hidden chính thức; public pass không bảo đảm đạt ngưỡng hidden. Email và tài khoản GitHub cá nhân cần được bổ sung bằng thông tin thật trước khi nộp.
+Em đã hoàn thành phần kiểm thử, đánh giá public và phối hợp hoàn thiện báo cáo. Tuy nhiên, em vẫn cần luyện giải thích luồng xử lý và đọc trace để tự tin hơn khi trình bày. Nhóm chưa có kết quả hidden chính thức nên em chưa thể khẳng định hệ thống xử lý đúng mọi trường hợp chỉ dựa vào kết quả public.

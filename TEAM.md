@@ -11,10 +11,9 @@
 
 | STT | Họ tên | MSSV | Email | GitHub | Vai trò |
 | --: | ------ | ---- | ----- | ------ | ------- |
-
 |   1 | Trần Thị Lý | 2A202603404 | | lytrann236 | Workflow + integration |
-|   2 | Trần Việt Tiến | 2A202603394 | | https://github.com/lytrann236 | Single agent và kiểm thử single |
-|   3 | Đỗ Hoàng Minh | 2A202603507|26ai.hoangd@vinuni.edu.vn|Mazzonthego |         |
+|   2 | Trần Việt Tiến | 2A202603394 | | chuvoicon-cpu | Single agent và kiểm thử single |
+|   3 | Đỗ Hoàng Minh | 2A202603507 | 26ai.hoangd@vinuni.edu.vn | Mazzonthego | Orchestrator + handoff |
 |   4 | Nguyễn Thùy Dương | 2A202603388 | 26ai.duongnt8@vinuni.edu.vn | NTD-DUONG | Ledger/crash + evaluation/report |
 
 Gợi ý chia vai:
@@ -64,7 +63,7 @@ Sao chép mục dưới đây cho từng thành viên.
 - Commit `02bd691`, PR #1 (merge `d665216`).
 - `python -m pytest -q -m student -o addopts= -k workflow` → 62 passed.
 - `python -m pytest -q tests/test_workflow_extra.py` → 3 passed.
-
+- Báo cáo: [2A202603404_TranThiLy.md](<report/team/2A202603404_TranThiLy.md>).
 ## 2A202603394_TranVietTien
 
 ### Phần việc phụ trách
@@ -82,7 +81,7 @@ Sao chép mục dưới đây cho từng thành viên.
 
 - Commit code và test: `87dd8b8`; báo cáo cá nhân: `c8be9f3`.
 - Kết quả kiểm tra: 62 test single pass, 1 test cá nhân pass, 55 test host pass (đã gồm test cá nhân).
-- Báo cáo: [2A202603394_Trần Việt Tiến.md](<report/team/2A202603394_Trần Việt Tiến.md>).
+- Báo cáo: [2A202603394_TranVietTien.md](<report/team/2A202603394_TranVietTien.md>).
 
 ## <MSSV_HoTen người 3>
 

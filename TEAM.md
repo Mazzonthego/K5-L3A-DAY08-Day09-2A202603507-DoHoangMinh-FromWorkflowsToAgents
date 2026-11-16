@@ -11,7 +11,7 @@
 
 | STT | Họ tên | MSSV | Email | GitHub | Vai trò |
 | --: | ------ | ---- | ----- | ------ | ------- |
-|   1 | Trần Thị Lý | 2A202603404 | | lytrann236 | Workflow + integration |
+|   1 | Trần Thị Lý | 2A202603404 |26ai.lytt@vinuni.edu.vn | lytrann236 | Workflow + integration |
 |   2 | Trần Việt Tiến | 2A202603394 | | chuvoicon-cpu | Single agent và kiểm thử single |
 |   3 | Đỗ Hoàng Minh | 2A202603507 | 26ai.hoangd@vinuni.edu.vn | Mazzonthego | Orchestrator + handoff |
 |   4 | Nguyễn Thùy Dương | 2A202603388 | 26ai.duongnt8@vinuni.edu.vn | NTD-DUONG | Ledger/crash + evaluation/report |

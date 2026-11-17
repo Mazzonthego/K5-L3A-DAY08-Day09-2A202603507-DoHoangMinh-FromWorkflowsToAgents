@@ -499,217 +499,35 @@ git push origin starter/d09
 
 ---
 
-## 🔲 M5 — Eval Set v2 + Slice Gate (Advanced, 18đ)
+## ✅ M5 — Eval Set v2 + Slice Gate (Advanced, 18đ)
 
-### Bước 5.1: Điền `config/fm_map.yaml`
-
-Map mỗi attack mechanism trong adversarial pack → mã FM của bạn.
-
-### Bước 5.2: Build eval set v2
-
-```bash
-cd src
-python -m lab9.evalset --v2 --build
-# Mỗi FM bị tấn công cần >= 3 item
-```
-
-### Bước 5.3: Implement `slice_check` trong `gate.py` (dòng 40–48)
-
-Cho mỗi entry trong `spec["slices"]`:
-- Tính `value = mean(per_item(pr, metric, slice_name=name))`
-- Fail nếu dưới `min` hoặc nếu `no_significant_drop` và CI nằm hoàn toàn dưới 0
-
-```python
-def slice_check(pr: dict, base: dict, spec: dict) -> tuple[list[str], list[str]]:
-    blocked, lines = [], []
-    bs = spec.get("bootstrap", {})
-    for sl in spec.get("slices", []):
-        name, metric = sl["name"], sl["metric"]
-        a_items = per_item(pr, metric, slice_name=name)
-        b_items = per_item(base, metric, slice_name=name)
-        val = sum(a_items.values()) / len(a_items) if a_items else None
-        verdict, note = "ok", ""
-        if val is None:
-            verdict = "missing"
-        elif "min" in sl and val < sl["min"]:
-            verdict = "fail"
-        if sl.get("no_significant_drop") and val is not None and a_items and b_items:
-            keys = sorted(set(a_items) & set(b_items))
-            if keys:
-                d, lo, hi = stats.paired_bootstrap(
-                    [a_items[k] for k in keys], [b_items[k] for k in keys],
-                    n_resamples=bs.get("n_resamples", 1000), rng=bs.get("rng", 2027))
-                note = f"Δ {d:+.3f} CI [{lo:+.3f}, {hi:+.3f}]"
-                if hi < 0:
-                    verdict = "fail"
-        sid = f"slice:{name}/{metric}"
-        if verdict != "ok" and sl.get("blocking"):
-            blocked.append(sid)
-        label = {"ok": "ok", "missing": "MISSING"}.get(verdict, "BLOCK" if sl.get("blocking") else "warn")
-        lines.append(f"  {sid:<35} {val!s:<8} {note:<28} {label}")
-    return blocked, lines
-```
-
-### Bước 5.4: Điền `config/metric_spec_v2.yaml`
-
-Thêm:
-- `slices`: `money_movement` (blocking), `adversarial` (blocking)
-- `pass_hat_5` (blocking)
-- Metric FM-08
-
-### Bước 5.5: Sinh baseline v2 và kiểm tra slice_regression
-
-```bash
-cd src
-python -m lab9.eval --shape swarm --spec config/metric_spec_v2.yaml --out reports/baseline_v2.json
-python -m lab9.eval --shape slice_regression --spec config/metric_spec_v2.yaml
-python -m lab9.gate --pr reports/eval_slice_regression.json --baseline reports/baseline_v2.json --spec config/metric_spec_v2.yaml
-# Mong đợi: exit 1 với slice:money_movement bị block
-```
-
-### Commit M5
-
-```bash
-git add -A ; git commit -m "feat(M5): eval set v2 + slice gate"
-```
+- [x] Bước 5.1: Điền `config/fm_map.yaml` map 8 cơ chế tấn công vào FM codes
+- [x] Bước 5.2: Build eval set v2 `python -m lab9.evalset --v2 --build` (28 items) và `--v2 --check` (0 problems)
+- [x] Bước 5.3: Implement `slice_check` trong `gate.py`
+- [x] Bước 5.4: Điền `config/metric_spec_v2.yaml` (slices `denial`, `money_movement`, `adversarial`, `pass_hat_5`, metric FM-08)
+- [x] Bước 5.5: Sinh `reports/baseline_v2.json` và kiểm tra gate trên `slice_regression` (chặn thành công slice `money_movement`)
+- [x] Commit: `feat(M5): eval set v2 + slice gate`
 
 ---
 
-## 🔲 M6 — Nhiễu: pass@k / pass^k (Advanced, 5đ)
+## ✅ M6 — Nhiễu: pass@k / pass^k (Advanced, 5đ)
 
-### Bước 6.1: Implement `pass_at_k` và `pass_hat_k` trong `stats.py`
-
-```python
-def pass_at_k(n: int, c: int, k: int) -> float:
-    from math import comb
-    if k > n:
-        raise ValueError(f"k={k} > n={n}")
-    return 1.0 - comb(n - c, k) / comb(n, k)
-
-
-def pass_hat_k(n: int, c: int, k: int) -> float:
-    from math import comb
-    if k > n:
-        raise ValueError(f"k={k} > n={n}")
-    return comb(c, k) / comb(n, k)
-```
-
-### Bước 6.2: Chạy A/A noise check
-
-```bash
-cd src
-python -m lab9.mutation --spec config/metric_spec_v2.yaml --aa 66,77,88,99,110
-# MockLLM → Δ = 0 (xác định). Giải thích: LLM thật → dải nhiễu > 0, sàn phải ngoài dải đó.
-```
-
-### Bước 6.3: Chọn ngưỡng `pass_hat_5`
-
-Đặt `pass_hat_5` ≥ 0.8 (blocking) trong `metric_spec_v2.yaml`.
-- `flaky_regression` (bug 1/5 seed) → `pass_hat_5` thấp → bị block
-- `pass_rate` trung bình có thể vẫn trên sàn → `pass_hat_5` bắt được
-
-### Commit M6
-
-```bash
-git add -A ; git commit -m "feat(M6): pass_at_k pass_hat_k + noise analysis"
-```
+- [x] Bước 6.1: Implement `pass_at_k` và `pass_hat_k` trong `stats.py`
+- [x] Bước 6.2: Chạy A/A noise check `python -m lab9.mutation --spec config/metric_spec_v2.yaml --aa 66,77,88,99,110` (delta = 0)
+- [x] Bước 6.3: Chọn ngưỡng `pass_hat_5` min: 0.80 (blocking) trong `metric_spec_v2.yaml`
+- [x] Commit: `feat(M6): pass_at_k pass_hat_k + noise analysis`
 
 ---
 
-## 🔲 M7 — Chống Gian Lận Eval (Expert, 15đ)
+## ✅ M7 — Chống Gian Lận Eval (Expert, 15đ)
 
-### Bước 7.1: Implement `integrity_check` trong `gate.py` (dòng 21–37)
-
-```python
-def integrity_check(pr: dict, base: dict, spec: dict, base_spec: dict | None = None) -> list[str]:
-    import math
-    problems = []
-
-    # 1. NaN / inf trong metrics
-    for mid, val in pr.get("metrics", {}).items():
-        if val is not None and (math.isnan(val) or math.isinf(val)):
-            problems.append(f"metric {mid} is {val}")
-
-    # 2. Số dòng phải = items × seeds
-    expected_rows = pr["manifest"]["items"] * len(pr["manifest"]["seeds"])
-    if len(pr["rows"]) != expected_rows:
-        problems.append(f"row count {len(pr['rows'])} != {expected_rows}")
-
-    # 3. (item_id, seed) set phải trùng baseline
-    pr_keys = {(r["item_id"], r["seed"]) for r in pr["rows"]}
-    base_keys = {(r["item_id"], r["seed"]) for r in base["rows"]}
-    if pr_keys != base_keys:
-        problems.append(f"(item, seed) differs: PR has {len(pr_keys)}, base has {len(base_keys)}")
-
-    # 4. evaluator_failures hoặc None values cho graded metrics
-    if pr.get("evaluator_failures"):
-        problems.append(f"{len(pr['evaluator_failures'])} evaluator failure(s)")
-    graded = {m["id"] for m in spec["metrics"]}
-    for r in pr["rows"]:
-        for mid in graded:
-            if mid in r and r[mid] is None:
-                problems.append(f"row {r['item_id']}@{r['seed']}: {mid} is None")
-
-    # 5. Ratchet check (base_spec vs spec)
-    if base_spec:
-        base_metrics = {m["id"]: m for m in base_spec.get("metrics", [])}
-        for m in spec["metrics"]:
-            bm = base_metrics.get(m["id"])
-            if bm:
-                # max may not rise
-                if "max" in m.get("threshold", {}) and "max" in bm.get("threshold", {}):
-                    if m["threshold"]["max"] > bm["threshold"]["max"]:
-                        problems.append(f"ratchet: {m['id']} max loosened {bm['threshold']['max']} -> {m['threshold']['max']}")
-                # min may not fall
-                if "min" in m.get("threshold", {}) and "min" in bm.get("threshold", {}):
-                    if m["threshold"]["min"] < bm["threshold"]["min"]:
-                        problems.append(f"ratchet: {m['id']} min loosened {bm['threshold']['min']} -> {m['threshold']['min']}")
-                # blocking may not become non-blocking
-                if bm.get("blocking") and not m.get("blocking"):
-                    problems.append(f"ratchet: {m['id']} was blocking, now not")
-                # no_significant_drop may not be dropped
-                if bm.get("threshold", {}).get("no_significant_drop") and not m.get("threshold", {}).get("no_significant_drop"):
-                    problems.append(f"ratchet: {m['id']} dropped no_significant_drop")
-
-    # 6. Slice tags may not change
-    pr_slices = {(r["item_id"], tuple(sorted(r.get("slices", [])))): True for r in pr["rows"]}
-    base_slices = {(r["item_id"], tuple(sorted(r.get("slices", [])))): True for r in base["rows"]}
-    for key in set(pr_slices) - set(base_slices):
-        if any(r["item_id"] == key[0] for r in base["rows"]):
-            problems.append(f"slice tags changed for {key[0]}")
-
-    return problems
-```
-
-### Bước 7.2: Chạy traps
-
-```bash
-cd src
-python -m lab9.eval --shape slice_regression --spec config/metric_spec_v2.yaml --out reports/eval_slice_regression.json
-python -m lab9.traps --pr reports/eval_slice_regression.json --baseline reports/baseline_v2.json --spec config/metric_spec_v2.yaml
-# Mong đợi: exit 0 (gate chặn mọi trap)
-```
-
-### Bước 7.3: Chạy mutation scorecard
-
-```bash
-cd src
-python -m lab9.mutation --spec config/metric_spec_v2.yaml --baseline reports/baseline_v2.json
-# Mong đợi: 3/3 regression bị chặn, 0 báo nhầm (fixed, honest_refactor phải merge)
-```
-
-### Bước 7.4: Chạy advanced tests
-
-```bash
-cd src
-python -m pytest -q -m student -o addopts= -k advanced
-```
-
-### Commit M7
-
-```bash
-git add -A ; git commit -m "feat(M7): integrity check + traps + mutation scorecard"
-```
+- [x] Bước 7.1: Implement `integrity_check` trong `gate.py` (bắt NaN/inf, dropped rows, cherry-picked seeds, evaluator failures, loosened spec, changed slice tags)
+- [x] Bước 7.2: Chạy `python -m lab9.traps` ➔ chặn đứng 100% 4 public traps (exit 0)
+- [x] Bước 7.3: Chạy mutation scorecard `python -m lab9.mutation` ➔ 3/3 blocked, 0 false alarms
+- [x] Bước 7.4: Chạy advanced tests `pytest tests/test_lab9_advanced.py -m student -o addopts=` ➔ 12/12 passed
+- [x] Cập nhật `docs/eval_card.md` phần v2 (A/A analysis, slice analysis, mutation scorecard, sample size limits)
+- [x] Cập nhật `SUBMISSION.md` tích hoàn thành Advanced / Expert (40/40đ)
+- [x] Commit: `feat(M7): integrity check + traps + mutation scorecard`
 
 ---
 

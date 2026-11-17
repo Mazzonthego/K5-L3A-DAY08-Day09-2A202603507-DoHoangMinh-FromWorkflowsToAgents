@@ -361,10 +361,19 @@ git add -A ; git commit -m "feat(M3): trajectory graders + FM-08 metric"
 
 ---
 
-## 🔲 M4 — Paired Bootstrap + CI Gate (15đ)
+## ✅ M4 — Paired Bootstrap + CI Gate (15đ)
 
 ### Mục tiêu
 Implement `paired_bootstrap` trong `stats.py`. Chạy gate: chặn `seeded_regression` (exit 1), cho qua `fixed` (exit 0). Sinh baseline. Cập nhật `harness_map.yaml`.
+
+- [x] Bước 4.1: Implement `paired_bootstrap` trong `stats.py` (sử dụng `scipy.stats.bootstrap`)
+- [x] Bước 4.2: Chạy test bootstrap `pytest tests/test_lab9_stats.py` (6/6 passed)
+- [x] Bước 4.3: Sinh baseline `reports/baseline_v1.json` trên shape swarm
+- [x] Bước 4.4: Chạy gate trên `fixed` ➔ exit 0 — merge
+- [x] Bước 4.5: Chạy gate trên `seeded_regression` ➔ exit 1 — blocked: refund_amount_correct, reply_amount_match, pass_rate
+- [x] Bước 4.6: Cập nhật `harness_map.yaml` bump version 1.2 và thêm section `eval:`
+- [x] Bước 4.7: Force add baseline reports và commit M4
+- [x] Commit: `feat(M4): paired bootstrap + gate + baseline v1`
 
 ### Bước 4.1: Implement `paired_bootstrap` trong `stats.py` (dòng 39–45)
 

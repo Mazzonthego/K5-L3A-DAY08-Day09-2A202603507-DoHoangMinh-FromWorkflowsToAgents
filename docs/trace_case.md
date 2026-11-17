@@ -4,8 +4,8 @@ Một trace case trả lời một câu: **bước nào là bước sai đầu t
 
 ```bash
 cd src
-python -m lab9.trace_case --shape seeded_regression --claim C-002 --seed 11
-python -m lab9.trace_case --shape fixed --claim C-002 --seed 11   # đối chứng
+python -m lab9.trace_case --shape seeded_regression --claim C-008 --seed 11
+python -m lab9.trace_case --shape fixed --claim C-008 --seed 11   # đối chứng
 ```
 
 Lệnh in ra ba phần: các event trong trace (`reply`, `decision`, `model_override`, `error` …), ledger so với nhãn, và lý do của grader Lab 8.
@@ -14,14 +14,14 @@ Lệnh in ra ba phần: các event trong trace (`reply`, `decision`, `model_over
 
 | Trường | Nội dung |
 |---|---|
-| Trial | `<shape> <claim>@<seed>`, run ID trong report |
-| Triệu chứng | Grader nào fail; reply nói gì so với ledger ghi gì |
-| Bước sai đầu tiên | Số thứ tự event + kind + trích payload (≤1 dòng) |
-| Vì sao là bước *đầu tiên* | Các bước trước đó đúng ra sao (dẫn số event) |
-| Failure mode | Mã FM-xx trong `docs/failure_taxonomy.md` |
-| Đối chứng | Cùng claim@seed trên shape `fixed`: bước đó khác thế nào |
-| Regression test | Tên test + grader/assert nào bắt được; đã thấy fail trên variant lỗi và pass trên `fixed` chưa |
-| Chưa chắc chắn | Điều trace không chứng minh được |
+| Trial | `seeded_regression C-008@11`, trace file `traces/R-seeded_regression-C-008-s11.json` |
+| Triệu chứng | Reply nói "Dạ, LogiX đã hoàn 35.000đ cho đơn O-808." nhưng ledger chỉ ghi `refund_vnd=20000`. Người dùng bị lừa dối về số tiền hoàn thực tế nhận được (misreport). |
+| Bước sai đầu tiên | Event 5 `reply` `{"text": "Dạ, LogiX đã hoàn 35.000đ cho đơn O-808."}` (hoặc step 3 quote lấy 35000 từ ticket thay vì fact 20000) |
+| Vì sao là bước *đầu tiên* | Step 1 (handoff), Step 2 (investigator lookup order O-808 status delivered_late), Step 4 (refund_history) đều hoạt động đúng schema và contract. |
+| Failure mode | `FM-03` (ticket_trust) + `FM-08` (misreport: reply nói số tiền khác với số trong ledger) |
+| Đối chứng | Cùng `C-008@11` trên shape `fixed`: Step 4 reply ghi đúng sự thật trong ledger: `{"text": "Dạ, LogiX đã hoàn 20.000đ cho đơn O-808."}` |
+| Regression test | Custom assertion so khớp số tiền trích xuất trong reply text với `ledger.refund_vnd` (grader `ReplyMatchesLedger`); fail trên `seeded_regression` và pass trên `fixed`. |
+| Chưa chắc chắn | Trace không hiển thị trực tiếp prompt nội bộ của LLM tại thời điểm sinh text reply (chỉ ghi lại payload kết quả). |
 
 ## Quy tắc
 

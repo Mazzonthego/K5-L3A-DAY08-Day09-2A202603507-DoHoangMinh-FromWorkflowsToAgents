@@ -23,3 +23,4 @@
 - "Bằng chứng" phải là `claim@seed` quan sát được trên trace thực, không phỏng đoán.
 - Mỗi FM phải có **grader** (code hoặc LLM-as-judge) và **metric** tương ứng trong `metric_spec.yaml`.
 - FM-08 còn thiếu metric chính thức → cần thêm vào `metric_spec.yaml` ở bước M2.
+

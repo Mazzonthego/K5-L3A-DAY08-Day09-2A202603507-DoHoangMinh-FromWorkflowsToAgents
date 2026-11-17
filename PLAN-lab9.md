@@ -115,10 +115,16 @@ git add -A ; git commit -m "feat(M1): failure taxonomy + eval set failure_modes"
 
 ---
 
-## 🔲 M2 — Judge Calibration (12đ)
+## ✅ M2 — Judge Calibration (12đ)
 
 ### Mục tiêu
 Implement các hàm thống kê trong `stats.py`, chạy judge calibration, kết luận judge nào dùng được / loại.
+
+- [x] Bước 2.1: Implement `stats.py` — 4 hàm `confusion`, `precision_recall`, `cohen_kappa`, `rogan_gladen`
+- [x] Bước 2.2: Chạy test tự kiểm `pytest tests/test_lab9_stats.py -m student` (4 passed)
+- [x] Bước 2.3: Chạy judge calibration: `judge_tone` đạt PASS floors (κ=0.757, P=0.857, R=0.8), `judge_helpful` FAIL floors (κ=0.375, R=0.3)
+- [x] Bước 2.4: Hoàn thành `docs/judge_audit.md` (kết quả calibration, 5 case audit chi tiết, kết luận loại `helpful` và giữ `tone_ok`)
+- [x] Commit: `feat(M2): stats + judge calibration + audit`
 
 ### Bước 2.1: Implement `stats.py` — 4 hàm TODO M2
 

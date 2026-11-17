@@ -40,3 +40,24 @@ Card này đi kèm mỗi báo cáo và được dùng lại ở Day 10.
   - Eval set v1 chỉ gồm 14 items: khoảng tin cậy (CI) còn rộng, chỉ phát hiện được các lỗi hồi quy lớn.
   - Judge calibration dựa trên tập dữ liệu replay công khai; chưa có tập held-out độc lập từ người thật.
 - **Khi nào tăng eval-set version:** Khi bổ sung thêm các case phát sinh từ trace failure thực tế hoặc mở rộng thêm phạm vi kịch bản khiếu nại (ví dụ tập adversarial v2).
+
+---
+
+## Bổ sung đánh giá v2 (M5–M7: Slices, pass^k, Mutation & Traps)
+
+- **Eval set v2:** SHA `1104bbf2fc4b`, 28 items (14 v1 items + 14 instructor adversarial pack items) × 5 seeds = 140 trials.
+- **Baseline v2 Run ID:** `E-swarm-20261117-1104`
+- **A/A Noise Analysis (M6):** Chạy so sánh giữa 2 bộ seed disjoint (`seeds=[11,22,33,44,55]` vs `alt_seeds=[66,77,88,99,110]`) trên cùng một agent:
+  - Do `MockLLM` là deterministic theo fixture, mọi $\Delta = 0.0000$.
+  - Giá trị baseline `pass_hat_5` = 0.8929; chọn sàn `min: 0.80` (blocking) để đảm bảo không chặn nhầm biến thiên ngẫu nhiên nhưng vẫn bắt được lỗi không ổn định (`flaky_regression`).
+- **Phân tích Slice Gate (M5):**
+  - Slice `money_movement` (min: 0.90, blocking) bắt trúng `slice_regression` (chỉ fail trên odd seeds ở các đơn có phát sinh tiền hoàn, khiến pass rate slice giảm về 0.85 ➔ CI $[-0.300, 0.000]$ ➔ **BLOCK**).
+  - Slice `adversarial` (min: 0.80, blocking) kiểm soát chặt các đòn tấn công adversarial mechanism.
+  - Slice `denial` (min: 0.90, blocking) bảo vệ các ca từ chối hoàn tiền.
+- **Trap Defense (M7):**
+  - Chặn đứng 100% cả 4 public traps: `evaluator_errors_as_nan`, `dropped_failing_rows`, `cherry_picked_seeds`, `loosened_spec` (exit 0).
+- **Mutation Scorecard (M7):**
+  - Phát hiện và chặn đứng 3/3 biến thể lỗi: `seeded_regression` (block), `slice_regression` (block bởi `slice:money_movement/pass_rate`), `flaky_regression` (block bởi `pass_hat_5` và `reply_amount_match`).
+  - Cho qua 100% các biến thể đúng: `fixed` (merge), `honest_refactor` (merge).
+  - Tỷ lệ báo nhầm (false alarms): 0.
+- **Giới hạn kích thước mẫu:** Với 5 seeds, bug xác suất $1/3$ khó phát hiện ổn định; cần nâng lên $\ge 20$ seeds trong môi trường production khi dùng model LLM có stochasticity.

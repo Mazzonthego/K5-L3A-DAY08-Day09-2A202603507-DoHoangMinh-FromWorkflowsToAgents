@@ -15,3 +15,21 @@ PR từ `starter/d09` → `main` của repo nhóm. Chấm commit cuối trước
 - [x] `src/reports/baseline_v2.json` (sinh bằng script) → job `eval-gate-v2` chạy và xanh
 - [x] Mô tả PR: output `lab9.mutation` (scorecard + `--aa`) và 4 dòng `exit 1` của các trap
 - [x] `docs/eval_card.md` thêm mục v2: ngưỡng chọn từ A/A, slice nào bắt lỗi nào, và giới hạn cỡ mẫu (bug 1/3 seed không phát hiện ổn định với 5 seed)
+
+## Kết quả tự kiểm (local, trước khi mở PR)
+
+| Lệnh | Kết quả |
+|---|---|
+| `pytest -q -m student -o addopts= -k lab9` | 23 passed |
+| `python -m lab9.smoke` | M0 PASS |
+| `python -m lab9.evalset --check` | 0 problem(s) |
+| `python -m lab9.evalset --v2 --check` | 0 problem(s) |
+| `python -m lab9.judge --csv data/eval/judge_tone_public.csv` | PASS floors (κ=0.757, P=0.857, R=0.800) |
+| `python -m lab9.judge --csv data/eval/judge_helpful_public.csv` | FAIL floors (κ=0.375, R=0.300) ➔ loại |
+| `python -m lab9.gate --pr reports/eval_fixed.json --baseline reports/baseline_v1.json` | exit 0 — merge |
+| `python -m lab9.gate --pr reports/eval_seeded_regression.json --baseline reports/baseline_v1.json` | exit 1 — blocked: refund_amount_correct, reply_amount_match, pass_rate |
+| `python -m lab9.gate --pr reports/eval_slice_regression.json --baseline reports/baseline_v2.json --spec config/metric_spec_v2.yaml` | exit 1 — blocked: slice:money_movement/pass_rate |
+| `python -m lab9.mutation --spec config/metric_spec_v2.yaml --baseline reports/baseline_v2.json` | mutation score 3/3, false alarms 0 |
+| `python -m lab9.mutation --spec config/metric_spec.yaml --detect` | detection 100%, false alarms 0% |
+| `python -m lab9.traps --pr reports/eval_slice_regression.json --baseline reports/baseline_v2.json --spec config/metric_spec_v2.yaml` | exit 0 — chặn 4/4 public traps |
+| `python -m lab9.ci_check --pr reports/baseline_v1.json --baseline reports/baseline_v1.json` | exit 0 — baseline và spec hợp lệ |

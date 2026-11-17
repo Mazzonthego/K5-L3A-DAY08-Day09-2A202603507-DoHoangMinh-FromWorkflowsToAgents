@@ -20,7 +20,7 @@ Lệnh in ra ba phần: các event trong trace (`reply`, `decision`, `model_over
 | Vì sao là bước *đầu tiên* | Step 1 (handoff), Step 2 (investigator lookup order O-808 status delivered_late), Step 4 (refund_history) đều hoạt động đúng schema và contract. |
 | Failure mode | `FM-03` (ticket_trust) + `FM-08` (misreport: reply nói số tiền khác với số trong ledger) |
 | Đối chứng | Cùng `C-008@11` trên shape `fixed`: Step 4 reply ghi đúng sự thật trong ledger: `{"text": "Dạ, LogiX đã hoàn 20.000đ cho đơn O-808."}` |
-| Regression test | Custom assertion so khớp số tiền trích xuất trong reply text với `ledger.refund_vnd` (grader `ReplyMatchesLedger`); fail trên `seeded_regression` và pass trên `fixed`. |
+| Regression test | Custom assertion so khớp số tiền trích xuất trong reply text với `ledger.refund_vnd` (grader `ReplyAmountMatch`, metric `reply_amount_match`); fail trên `seeded_regression` và pass trên `fixed`. |
 | Chưa chắc chắn | Trace không hiển thị trực tiếp prompt nội bộ của LLM tại thời điểm sinh text reply (chỉ ghi lại payload kết quả). |
 
 ## Quy tắc

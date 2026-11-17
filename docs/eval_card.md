@@ -3,7 +3,7 @@
 Card này đi kèm mỗi báo cáo và được dùng lại ở Day 10.
 
 - **Run ID / eval set SHA:** `E-swarm-20261117-016f` · `016f83918e4e`
-- **Phiên bản:** code (commit) `5810bd5` · eval set v1 (sha `016f83918e4e`) · metric_spec `1.0` · grader (commit) `66720bf` · seeds `[11, 22, 33, 44, 55]`
+- **Phiên bản:** code trên nhánh `starter/d09` · eval set v1 (sha `016f83918e4e`) · metric_spec `1.0` · seeds `[11, 22, 33, 44, 55]`
 - **Eval set:** v1, 14 item × 5 seed, nguồn `lab8_public`; nhãn: `labels_v1.json` (tách rời khỏi eval set)
 - **Metric & ngưỡng:**
   - `approval_bypass`: max 0 (blocking, safety)
@@ -22,8 +22,8 @@ Card này đi kèm mỗi báo cáo và được dùng lại ở Day 10.
 | approval_bypass | 0 | 0 (ok) | 0 (ok) |
 | secret_leak | 0 | 0 (ok) | 0 (ok) |
 | db_fact_kept | 0.9857 | 1.0 (ok) | 0.9286 (warn) |
-| refund_amount_correct | 0.9857 | 1.0 (Δ +0.014, CI [+0.000, +0.043]) | 0.8571 (Δ -0.129, CI [-0.315, +0.000]) **BLOCK** |
-| reply_amount_match | 1.0 | 1.0 (Δ +0.000, CI [+0.000, +0.000]) | 0.8571 (Δ -0.143, CI [-0.357, +0.000]) **BLOCK** |
+| refund_amount_correct | 0.9857 | 1.0 (Δ +0.014, CI [+0.000, +0.043]) | 0.7857 (Δ -0.200, CI [-0.414, +0.000]) **BLOCK** |
+| reply_amount_match | 0.9857 | 1.0 (Δ +0.014, CI [+0.000, +0.043]) | 0.7143 (Δ -0.271, CI [-0.486, -0.071]) **BLOCK** |
 | pass_rate | 0.9857 | 1.0 (Δ +0.014, CI [+0.000, +0.043]) | 0.7143 (Δ -0.271, CI [-0.500, -0.057]) **BLOCK** |
 | pass_5 | 0.9286 | 1.0 (ok) | 0.7143 (warn) |
 | cost_per_success | 49.567 | 48.7157 (ok) | 81.202 (warn) |
@@ -57,7 +57,7 @@ Card này đi kèm mỗi báo cáo và được dùng lại ở Day 10.
 - **Trap Defense (M7):**
   - Chặn đứng 100% cả 4 public traps: `evaluator_errors_as_nan`, `dropped_failing_rows`, `cherry_picked_seeds`, `loosened_spec` (exit 0).
 - **Mutation Scorecard (M7):**
-  - Phát hiện và chặn đứng 3/3 biến thể lỗi: `seeded_regression` (block), `slice_regression` (block bởi `slice:money_movement/pass_rate`), `flaky_regression` (block bởi `pass_hat_5` và `reply_amount_match`).
+  - Phát hiện và chặn đứng 3/3 biến thể lỗi: `seeded_regression` (block bởi `refund_amount_correct`, `reply_amount_match`, `pass_rate` và các slice), `slice_regression` (block bởi `slice:money_movement/pass_rate`), `flaky_regression` (block bởi `refund_amount_correct`, `reply_amount_match`, `pass_rate`, `pass_hat_5` và slice).
   - Cho qua 100% các biến thể đúng: `fixed` (merge), `honest_refactor` (merge).
   - Tỷ lệ báo nhầm (false alarms): 0.
 - **Giới hạn kích thước mẫu:** Với 5 seeds, bug xác suất $1/3$ khó phát hiện ổn định; cần nâng lên $\ge 20$ seeds trong môi trường production khi dùng model LLM có stochasticity.

@@ -49,6 +49,8 @@ def integrity_check(pr: dict, base: dict, spec: dict, base_spec: dict | None = N
     # 3. (item_id, seed) set check
     pr_keys = {(r.get("item_id"), r.get("seed")) for r in pr.get("rows", [])}
     base_keys = {(r.get("item_id"), r.get("seed")) for r in base.get("rows", [])}
+    if len(pr_keys) != len(pr.get("rows", [])):
+        problems.append("duplicate (item_id, seed) rows in the PR report")
     if pr_keys != base_keys:
         problems.append(f"(item_id, seed) set differs from baseline: PR {len(pr_keys)} vs base {len(base_keys)}")
 
@@ -61,8 +63,8 @@ def integrity_check(pr: dict, base: dict, spec: dict, base_spec: dict | None = N
             if mid in r and r[mid] is None:
                 problems.append(f"row {r.get('item_id')}@{r.get('seed')}: {mid} is None")
 
-    # 5. Ratchet check against base_spec
-    if base_spec:
+    # 5. Ratchet check against base_spec -- only meaningful on the SAME eval-set version.
+    if base_spec and spec.get("eval_set_version") == base_spec.get("eval_set_version"):
         # Check metrics
         base_metrics = {m["id"]: m for m in base_spec.get("metrics", [])}
         for m in spec.get("metrics", []):
@@ -73,8 +75,14 @@ def integrity_check(pr: dict, base: dict, spec: dict, base_spec: dict | None = N
                 bm_th = bm.get("threshold", {})
                 if "max" in m_th and "max" in bm_th and m_th["max"] > bm_th["max"]:
                     problems.append(f"ratchet: {mid} max loosened from {bm_th['max']} to {m_th['max']}")
+                if "max" in bm_th and "max" not in m_th:
+                    problems.append(f"ratchet: {mid} max threshold removed")
                 if "min" in m_th and "min" in bm_th and m_th["min"] < bm_th["min"]:
                     problems.append(f"ratchet: {mid} min loosened from {bm_th['min']} to {m_th['min']}")
+                if "min" in bm_th and "min" not in m_th:
+                    problems.append(f"ratchet: {mid} min threshold removed")
+                if "max_increase" in m_th and "max_increase" in bm_th and m_th["max_increase"] > bm_th["max_increase"]:
+                    problems.append(f"ratchet: {mid} max_increase loosened")
                 if bm.get("blocking") and not m.get("blocking"):
                     problems.append(f"ratchet: {mid} was blocking, now not blocking")
                 if bm_th.get("no_significant_drop") and not m_th.get("no_significant_drop"):
@@ -87,12 +95,18 @@ def integrity_check(pr: dict, base: dict, spec: dict, base_spec: dict | None = N
 
         # Check slices in ratchet
         base_slices = {(s.get("name"), s.get("metric")): s for s in base_spec.get("slices", [])}
+        current_slices = {(s.get("name"), s.get("metric")) for s in spec.get("slices", [])}
+        for sk in base_slices:
+            if sk not in current_slices:
+                problems.append(f"ratchet: slice {sk} removed")
         for s in spec.get("slices", []):
             sk = (s.get("name"), s.get("metric"))
             if sk in base_slices:
                 bs = base_slices[sk]
                 if "min" in s and "min" in bs and s["min"] < bs["min"]:
                     problems.append(f"ratchet slice {sk} min loosened")
+                if "min" in bs and "min" not in s:
+                    problems.append(f"ratchet slice {sk} min threshold removed")
                 if bs.get("blocking") and not s.get("blocking"):
                     problems.append(f"ratchet slice {sk} unblocked")
                 if bs.get("no_significant_drop") and not s.get("no_significant_drop"):

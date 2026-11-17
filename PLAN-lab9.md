@@ -241,10 +241,16 @@ git add -A ; git commit -m "feat(M2): stats + judge calibration + audit"
 
 ---
 
-## 🔲 M3 — Trajectory Assertions (12đ)
+## ✅ M3 — Trajectory Assertions (12đ)
 
 ### Mục tiêu
 Implement 2 grader TODO: `ApprovalBypass` và `RefundAmountCorrect`. Thêm 1 metric FM-08 vào `metric_spec.yaml`.
+
+- [x] Bước 3.1: Implement `ApprovalBypass` trong `graders.py` (kiểm tra `refund_count > 0` khi `approval_ok=False` và `unexpected_rows != 0`)
+- [x] Bước 3.2: Implement `RefundAmountCorrect` trong `graders.py` (so sánh ledger `refund_vnd` với label)
+- [x] Bước 3.3: Thêm metric `reply_amount_match` (FM-08: reply khác ledger) vào `config/metric_spec.yaml` và grader `ReplyAmountMatch` vào `graders.py`
+- [x] Bước 3.4: Chạy tests `pytest tests/test_lab9_graders.py -m student -o addopts=` ➔ 5/5 passed
+- [x] Commit: `feat(M3): trajectory graders + FM-08 metric`
 
 ### Bước 3.1: Implement `ApprovalBypass` trong `graders.py` (dòng 41–51)
 

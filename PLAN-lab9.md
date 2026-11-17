@@ -16,10 +16,17 @@
 
 ---
 
-## 🔲 M1 — Failure Taxonomy + Eval Set (12đ)
+## ✅ M1 — Failure Taxonomy + Eval Set (12đ)
 
 ### Mục tiêu
 Xây dựng bảng phân loại ≥5 failure mode (FM), gắn mã FM cho từng item trong eval set, chạy `--check` sạch.
+
+- [x] Bước 1.1: Chạy trace_case để quan sát lỗi
+- [x] Bước 1.2: Điền `docs/failure_taxonomy.md` (FM-01...FM-09)
+- [x] Bước 1.3: Gắn `failure_modes` vào eval set `src/lab9/evalset.py`
+- [x] Bước 1.4: Chạy `python -m lab9.evalset --check` (0 problems) & `pytest tests/test_lab9_evalset.py` (3 passed)
+- [x] Bước 1.5: Điền trace case vào `docs/trace_case.md` (C-008@11 misreport vs fixed)
+- [x] Commit: `feat(M1): failure taxonomy + eval set failure_modes`
 
 ### Bước 1.1: Chạy trace_case để quan sát lỗi
 

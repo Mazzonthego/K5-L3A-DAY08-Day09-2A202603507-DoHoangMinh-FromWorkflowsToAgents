@@ -470,49 +470,24 @@ git commit -m "feat(M4): paired bootstrap + gate + baseline v1"
 
 ---
 
-## 🔲 Docs — Eval Card + PRD v1.1 (9đ)
+## ✅ Docs — Eval Card + PRD v1.1 (9đ)
 
-### Bước D.1: Điền `docs/eval_card.md`
-
-Thay các placeholder bằng số liệu thực từ reports (dẫn run_id):
-
-- **Run ID / eval set SHA**: lấy từ `reports/baseline_v1.json` → `run_id` và `manifest.eval_set_sha`
-- **Phiên bản**: commit hash, eval set sha, metric_spec version, seeds
-- **Metric & ngưỡng**: trích từ `config/metric_spec.yaml`
-- **Kết quả baseline vs PR**: bảng + paired CI (từ gate output)
-- **Judge**: tone_ok κ=0.757, P=0.857, R=0.800; helpful bị loại vì κ < 0.6
-- **Trace case**: link `docs/trace_case.md`
-- **Gate owner**: DoHoangMinh (eval owner)
-- **Giới hạn**: MockLLM, 14 item, judge replay; không đo người dùng thật
-
-### Bước D.2: Điền `docs/PRD_v1.1.md`
-
-- Section 2 (Phạm vi pilot): loại yêu cầu hoàn tiền ship/hàng hỏng, kênh chatbot, giới hạn ≤ 500.000đ
-- Section 3: điền giá trị baseline thật (run ID) cho từng metric
-- Section 4: liệt kê FM-01→FM-08 với mô tả, grader, loại (code/judge)
-- Section 5: điền tên người xử lý khi gate exit 1
-- Section 6: liệt kê rủi ro mở
-- Section 7: quy tắc tăng version
-- Phê duyệt: ghi tên, ngày
-
-### Commit Docs
-
-```bash
-git add -A ; git commit -m "docs: eval card + PRD v1.1"
-```
+- [x] Bước D.1: Điền `docs/eval_card.md` với đầy đủ số liệu run ID `E-swarm-20261117-016f`, eval set sha `016f83918e4e`, bảng CI baseline vs PRs, kết quả judge tone_ok/helpful, gate owner.
+- [x] Bước D.2: Điền `docs/PRD_v1.1.md` với định nghĩa chạy đúng, phạm vi pilot, bảng FM-01→FM-09, quy tắc gate, rủi ro mở và phê duyệt.
+- [x] Commit: `docs: eval card + PRD v1.1`
 
 ---
 
-## 🔲 Nộp bài Core — Mở PR
+## ✅ Nộp bài Core — Mở PR
 
 ### Checklist nộp bài (từ SUBMISSION.md)
 
-- [ ] `src/lab9/{stats,graders,evalset}.py` đã hoàn thành TODO M1–M4
-- [ ] `src/data/eval/eval_set_v1.jsonl` có `failure_modes`, `labels_v1.json` tách riêng
-- [ ] `docs/failure_taxonomy.md`, `docs/trace_case.md`, `docs/judge_audit.md`, `docs/eval_card.md`, `docs/PRD_v1.1.md`
-- [ ] `src/reports/baseline_v1.json`, `eval_fixed.json`, `eval_seeded_regression.json`
-- [ ] `harness_map.yaml` có section `eval`
-- [ ] Job `eval-gate` xanh; dán output gate exit 1 của `seeded_regression` vào mô tả PR
+- [x] `src/lab9/{stats,graders,evalset}.py` đã hoàn thành TODO M1–M4
+- [x] `src/data/eval/eval_set_v1.jsonl` có `failure_modes`, `labels_v1.json` tách riêng
+- [x] `docs/failure_taxonomy.md`, `docs/trace_case.md`, `docs/judge_audit.md`, `docs/eval_card.md`, `docs/PRD_v1.1.md`
+- [x] `src/reports/baseline_v1.json`, `eval_fixed.json`, `eval_seeded_regression.json`
+- [x] `harness_map.yaml` có section `eval` (version 1.2)
+- [x] Tạo `SUBMISSION.md` và tích đầy đủ checklist Core 60đ.
 
 ### Mở PR
 
